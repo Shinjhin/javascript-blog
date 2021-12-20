@@ -1,7 +1,9 @@
 'use strict';
 
-function titleClickHandler(event){
+function titleClickHandler(event) {
+    
   event.preventDefault();
+    
   const clickedElement = this;
   console.log('Link was clicked!');
     
@@ -39,9 +41,12 @@ function titleClickHandler(event){
 const optArticleSelector = '.post',
   optTitleSelector = '.post-title',
   optTitleListSelector = '.titles',
-  optArticleTagsSelector = '.post-tags .list'
+  optArticleTagsSelector = '.post-tags .list',
+  optArticleAuthorSelector = '.post-author';
 
-function generateTitleLinks(){
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+function generateTitleLinks(customSelector = ''){
 
   /* remove contents of titleList */
   const titleList = document.querySelector(optTitleListSelector);
@@ -49,8 +54,7 @@ function generateTitleLinks(){
   console.log(titleList);
     
   /* for each article */
-  const articles = document.querySelectorAll(optArticleSelector);
-  console.log('articles: ', articles);
+  const articles = document.querySelectorAll(optArticleSelector + customSelector);
 
   let html = '';
     
@@ -60,7 +64,7 @@ function generateTitleLinks(){
     const articleId = article.getAttribute('id'); 
          
     /* find the title element */
-    const articleTitle = article.querySelector(optTitleSelector); 
+    const articleTitle = article.querySelector(optTitleSelector).innerHTML; 
          
     /* get the title from the title element */
     const linkHTML = '<li><a href="#' + articleId + '"><span>' + articleTitle + '</span></a></li>';
@@ -76,6 +80,8 @@ function generateTitleLinks(){
 }
 
 generateTitleLinks();
+
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 function generateTags(){
     
@@ -114,7 +120,10 @@ function generateTags(){
 
 generateTags();
 
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 function tagClickHandler(event){
+    
   /* prevent default action for this event */
   event.preventDefault();
     
@@ -125,44 +134,50 @@ function tagClickHandler(event){
   const href = clickedElement.getAttribute('href'); 
 
   /* make a new constant "tag" and extract tag from the "href" constant */
-  const tag = document.getAttribute(href);
-
+  const tag = href.replace('#tag-', '');
+    
   /* find all tag links with class active */
-  
+  const activeTags  = document.querySelectorAll('a.active[href^="#tag-"]');
 
   /* START LOOP: for each active tag link */
-    
-    
-  /* remove class active */
-
-    
-  /* END LOOP: for each active tag link */
-
+  for(let activeTag of activeTags) {   
+    activeTag.classList.remove('active');
+  }
     
   /* find all tag links with "href" attribute equal to the "href" constant */
-
+  const tagLinksHref = document.querySelectorAll('a[href="' + href + '"]');
     
   /* START LOOP: for each found tag link */
-
-    
-  /* add class active */
-
-    
-  /* END LOOP: for each found tag link */
-
-    
+  for(let tagLinkHref of tagLinksHref){  
+     tagLinkHref.classList.add('active');
+  }
+ 
   /* execute function "generateTitleLinks" with article selector as argument */
+  generateTitleLinks('[data-tags~="' + tag + '"]');
 }
 
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 function addClickListenersToTags(){
+    
   /* find all links to tags */
-
+  const allLinksToTags = document.querySelectorAll('a[href^="#tag-"]');
+    
   /* START LOOP: for each link */
-
-    /* add tagClickHandler as event listener for that link */
-
-  /* END LOOP: for each link */
+  for(let link of allLinksToTags){
+    link.addEventListener('click', tagClickHandler);
+  }
 }
 
 addClickListenersToTags();
  
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+function generateAuthors(){ 
+  
+}
+
+generateAuthors();
+
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
