@@ -101,15 +101,15 @@ function generateTags(){
     const articleTags = article.getAttribute('data-tags');  
       
     /* split tags into array */
-    const articleTagsArray = articleTags.split(' ')
+    const articleTagsArray = articleTags.split(' ');
       
     /* START LOOP: for each tag */
     for(let tag of articleTagsArray){
 
-    /* generate HTML of the link */
+      /* generate HTML of the link */
       const tagLinkHTML = '<li><a href="#tag-' + tag + '"><span>' + tag + '</span></a></li> ';
 
-    /* add generated code to html variable */
+      /* add generated code to html variable */
       html = html + tagLinkHTML;  
     }
       
@@ -149,7 +149,7 @@ function tagClickHandler(event){
     
   /* START LOOP: for each found tag link */
   for(let tagLinkHref of tagLinksHref){  
-     tagLinkHref.classList.add('active');
+    tagLinkHref.classList.add('active');
   }
  
   /* execute function "generateTitleLinks" with article selector as argument */
