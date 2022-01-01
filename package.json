@@ -12,7 +12,7 @@
     "test:html": "html-validate *.html",
     "test:js": "eslint js/",
     "build": "npm-run-all build:* test",
-    "build:sass": "sass sass:css",
+    "build:sass": "node-sass --output-style compact -o css sass",
     "build:autoprefixer": "postcss css/*.css --use autoprefixer -d css",
     "build-dev": "npm-run-all build-dev:sass build:autoprefixer",
     "build-dev:sass": "sass sass:css",
@@ -28,11 +28,15 @@
     "browser-sync": "^2.27.7",
     "eslint": "^8.5.0",
     "mkdirp": "^1.0.4",
+    "html-validate": "^2.8.0",
     "node-sass": "^6.0.1",
     "npm-run-all": "^4.1.5",
     "onchange": "^7.1.0",
     "postcss": "^8.2.6",
     "postcss-cli": "^8.3.1",
     "task-runner": "^0.0.8"
+  },
+  "dependencies": {
+    "sass": "^1.44.0"
   }
 }
